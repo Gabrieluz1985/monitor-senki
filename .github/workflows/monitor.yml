@@ -2,7 +2,7 @@ name: Monitor Senki
 
 on:
   schedule:
-    - cron: '0 9-19 * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
   
 permissions:
