@@ -196,3 +196,6 @@ else:
     df_actual.to_csv(archivo_anterior, index=False, encoding="utf-8-sig")
 
     print("\nBase actualizada.")
+    
+     print("test trigger")
+
