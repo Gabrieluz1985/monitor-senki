@@ -2,46 +2,41 @@ name: Monitor Senki
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
-    push:
+    - cron: "*/5 * * * *"
+  push:
     branches:
-    - main 
+      - main
   workflow_dispatch:
-  
+
 permissions:
-    contents: write
-    
+  contents: write
+
 jobs:
   run-monitor:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.12'
+      - name: Install dependencies
+        run: pip install requests pandas
 
-    - name: Install dependencies
-      run: |
-        pip install requests pandas
+      - name: Run monitor
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        run: python monitor.py
 
-    - name: Run monitor
-      env:
-        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-      run: |
-        python monitor.py
+      - name: Commit updated CSV
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
 
-    - name: Commit updated CSV
-      run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "actions@github.com"
-
-        git add productos_anterior.csv
-
-        git commit -m "Atualiza base de preços" || echo "Sin cambios"
-
-        git push
+          git add productos_anterior.csv
+          git commit -m "update prices" || echo "No changes"
+          git push
