@@ -197,5 +197,4 @@ else:
 
     print("\nBase actualizada.")
     
-     print("test trigger")
 
