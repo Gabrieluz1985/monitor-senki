@@ -23,7 +23,7 @@ MARCAS = [
 # TELEGRAM
 # ===================================
 
-TOKEN = "8709633955:AAEEVI13XrFkb0T1dHZZuz6nNPHmcM5MqfQ"
+TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = "6519393068"
 
 # ===================================
